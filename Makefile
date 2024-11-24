@@ -1,4 +1,4 @@
-.PHONY: source_venv, install, clean_venv, venv, download_dbs, configure_vscode
+.PHONY: source_venv, install, clean_venv, venv, download_dbs, configure_vscode, node_info
 
 USE_NODE ?= false
 SRUN_CMD = $(if $(filter true,$(USE_NODE)),echo "Executing in Node..." && srun -p gpu --gres=gpu:2 --pty /bin/bash -c 'make $(MAKECMDGOALS) USE_NODE=false',)
@@ -37,7 +37,7 @@ venv: clean_venv
 	echo "PROJECT_PATH=$(shell pwd)" > .env; \
 	} 2>&1 | tee -a $(LOG_FILE)
 
-clean_venv: node_info
+clean_venv:
 	@{ \
 	if [ "$(USE_NODE)" = "true" ]; then \
 		exit 0; \
@@ -46,7 +46,9 @@ clean_venv: node_info
 	rm -rf venv; \
 	rm -rf ~/.cache/; \
 	rm -rf .env; \
-	} 2>&1 | tee -a $(LOG_FILE)
+	rm -rf make_run.log; \
+	make node_info; \
+	} 2>&1 | tee -a $(LOG_FILE); \
 
 download_dbs: source_venv
 	@{ \
