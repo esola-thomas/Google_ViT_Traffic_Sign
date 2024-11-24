@@ -3,3 +3,4 @@
 venv/
 .vscode/
 .nfs*
+actions-runner/
