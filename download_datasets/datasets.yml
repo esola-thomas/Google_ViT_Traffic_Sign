@@ -1,0 +1,13 @@
+datasets:
+  - name: tiny-lisa-traffic-sign-detection-dataset
+    owner: mmontiel
+    env_variable: LISA_DB_PATH
+    description: "Tiny LISA Traffic Sign Detection Dataset"
+  - name: lisa-traffic-light-dataset
+    owner: mbornoe
+    env_variable: LISA_TL_DB_PATH
+    description: "LISA Traffic Light Dataset"
+  - name: gtsrb-german-traffic-sign
+    owner: meowmeowmeowmeowmeow
+    env_variable: GTSRB_DB_PATH
+    description: "GTSRB German Traffic Sign Dataset"
