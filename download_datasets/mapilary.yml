@@ -1,0 +1,27 @@
+files:
+  - name: mtsd_fully_annotated_md5_sums.txt
+    url: https://scontent-mia3-2.xx.fbcdn.net/m1/v/t6/An8RSqTVAOhQUZHE5NgIL-tgliMqFe4h3ieVXSDNI-ilkh922n_TtB2VpiW-SzAHEYLiqk3Y3FU8pM-DskkOMCvFGh9RJAxxqi3RI2JXDvbQfq4xYwVstPYKlT44GhxzbDbdW_OG0lyY.txt?ccb=10-5&oh=00_AYD08Ux7RcBWFAz5BWghp8AnktVLoBhSR2ECxvv8yjhjAQ&oe=676BE385&_nc_sid=6de079
+  - name: mtsd_fully_annotated_annotation.zip
+    url: https://scontent-mia3-2.xx.fbcdn.net/m1/v/t6/An90x89nHvauCK1fqMJ8110KeTjNo5Si7rzhvwIMCu5xI9_GhWBGOIXaFvu6o53NuNpBMzdC9qsjAVR8sLv8m6WoFfn6Qd4NjMYKNW4NCKVp6gx3MhZtwf3cZR94wFhou5lPI0hGUw.zip?ccb=10-5&oh=00_AYBN7QgXaYR_E9A8Vhbp4Gbw8bec_N326n7TW61pvqgpmg&oe=676BD4C8&_nc_sid=6de079
+  - name: mtsd_fully_annotated_images.test.zip
+    url: https://scontent-mia3-2.xx.fbcdn.net/m1/v/t6/An9eB8zXYW473CiQYW9CPvGx1Ho-fkQvkini3ddExpFOz47aWs4ydBSvK-ZhOPu7ikASQmZvX0zyXhmJzBr6CDZE5ZkUhvJ44h7mV2NT4cSRbR837J9mHJosreQRJJdGaVDR26EAjLPL.zip?ccb=10-5&oh=00_AYCjPgXYfAhEskGOq6qG5KQQws8rLJoJiGfS7FqaiQZHnA&oe=676BDE5C&_nc_sid=6de079
+  - name: mtsd_fully_annotated_images.train.0.zip
+    url: https://scontent-mia3-2.xx.fbcdn.net/m1/v/t6/An_WKGcw-ICowA_xAgTEU_E-pAYdybyzT-9Pwi8JtelanWnNRKONV1DTAZPEAsGNDWlFpYDi16km1stDN47ip-quE77cfkv3aERdMIRahysGgspb6DlCgrabPSTFJI3tZ9EMRatRC6ZmjQytVcY.zip?ccb=10-5&oh=00_AYCKmQgY0v53H5vk2AXxZXuaSXrjVyZg-9XS6KKlj_-kDg&oe=676BDAB2&_nc_sid=6de079
+  - name: mtsd_fully_annotated_images.train.1.zip
+    url: https://scontent-mia3-2.xx.fbcdn.net/m1/v/t6/An8VtaI-ldaSOc5HcLFVQ6SPvHDt50hLG1kga0nUfswldLu1J9dsOx6ynZicRUuXR_TvsczpplOqQEa7ppT4JwUzI0ZNQCHmhtkfT5tjdNJY55Ud6eXplvq59PjOx55d2EbIxYpO9vhR-BcflQ.zip?ccb=10-5&oh=00_AYDxFuw2YHtl1hRTS34cU0pKrpvWOoCg4pVv9e3o4UHJkA&oe=676BEC9E&_nc_sid=6de079
+  - name: mtsd_fully_annotated_images.train.2.zip
+    url: https://scontent-mia3-2.xx.fbcdn.net/m1/v/t6/An9BwhO8zTAy6jGrwy71BjIBtMK8K5RkpIJguP7DVnpJK2TfKDlfxXj8mCxRJss4zzfaaKi2idqbQOtYJ740TPCI7w7hL8V7goknzuO0ZFPLywDCKIB7i64lCiSUNYXLqeS8mC7EkiU5hYAfOcI.zip?ccb=10-5&oh=00_AYAx2glDMiWGBbwckQNjD-VCvIBDFc-k_ypgcYFKYT_yrQ&oe=676BD61B&_nc_sid=6de079
+  - name: mtsd_fully_annotated_images.val.zip
+    url: https://scontent-mia3-2.xx.fbcdn.net/m1/v/t6/An9tl3SwDwRFQ2z9tAag26brYamdQZmHnVoxfNTz_Iass-zZLWM-HryqW44UeqbLWd-EkXVIP-ZQQfg3F7dmQYlnu1wjzCARviaJMBHgtLH4gTAeW6msFbEXA3_NIZBtdP7Gg8dt5Ewl.zip?ccb=10-5&oh=00_AYDfUo8Tjv8lh4I_6p1xVuOkBUNgETdw9GPwsz3FWhxYWA&oe=676BF5A7&_nc_sid=6de079
+  - name: mtsd_partially_annotated_md5_sums.txt
+    url: https://scontent-mia3-2.xx.fbcdn.net/m1/v/t6/An9FlyymG8PIT47PpdF-es5LyB3G1VvhyKar744ioBXCcFVQDaTVBq1LTvq1vz61u49tefGZb03n-mQ_PWKPIX8ZrMfRI09WMTygDexYMZJ6VkTWJK_7FTY47dC9KeKQG8RG3oGU6Dhw.txt?ccb=10-5&oh=00_AYBGmnTqklSsNjAWkOeM2iEIbFPa9wWvRlsJcJNfzdDlxw&oe=676BF503&_nc_sid=6de079
+  - name: mtsd_partially_annotated_annotation.zip
+    url: https://scontent-mia3-2.xx.fbcdn.net/m1/v/t6/An8dmcHh74W4QOmBjSUnIgjyIDl7pVOj8ym708qotPkG4w_03qYL9KUrHpljvhZgYfNJp82zqzc5ZNAawW6W-huIX9hXtE0Q1wEbbbJWyP2Qgfosi_118TvAPBpKxis6XM8RroqJwg.zip?ccb=10-5&oh=00_AYAPTqBGJqIycIWOmD-rLP8-OC35pqSEJ2sC0kC4IOyuyg&oe=676BFB90&_nc_sid=6de079
+  - name: mtsd_partially_annotated_images.train.0.zip
+    url: https://scontent-mia3-2.xx.fbcdn.net/m1/v/t6/An_XCkEh3XjG7bV8c4h5QX-Qodh85URfwXB83u_txLJaEcDmFH6VOUG0O2T8U5WZt7mpEa-EczZiupLH93KsSXfDAIPq8HjPJn1q_oRSBA3ufZus7MnJ_CGs1O166IJiczbnq9J-0NOZ_G5mR8c.zip?ccb=10-5&oh=00_AYCzJ720pJ_VCw9V9qbAVXHpMYZZQ3FW2uVC_epw7ILP8A&oe=676BDF00&_nc_sid=6de079
+  - name: mtsd_partially_annotated_images.train.1.zip
+    url: https://scontent-mia3-2.xx.fbcdn.net/m1/v/t6/An8bwxH70h7HKMm7H2IGV4ptYgE55ozIcf4_wWboduU4ToWxKTnWIelPbSqQ3C1RxKoRTjsOfB9_gzdrv6Oq6qLxEJ1IfOuOXvv6btXEwLfAw2feJOla96rwgmmQyhf-AzgqpS1yIKeydT8zkA.zip?ccb=10-5&oh=00_AYDbNqzPIXasCeCaZpLzcpQ5RjXQIiZM5fkBhM7JT-ba2A&oe=676BE8CB&_nc_sid=6de079
+  - name: mtsd_partially_annotated_images.train.2.zip
+    url: https://scontent-mia3-2.xx.fbcdn.net/m1/v/t6/An-nQsgt_uWGakflQM3LbwL32CaQBwAqrR1r2jdVCHNoR34x1v6LHlvlpTQ9CM86r3tREP05tP049I58J7utUv4vefGA3XD2Up-fJ5cXubNGDCglkw-haZwHnvQR-QtqOisk_5IOaEUK62MYBAE.zip?ccb=10-5&oh=00_AYDeaT_MZuLCt0icOHgcuY-KQKgb7hehLtuZaTt0sdPWBA&oe=676BFEA8&_nc_sid=6de079
+  - name: mtsd_partially_annotated_images.train.3.zip
+    url: https://scontent-mia3-2.xx.fbcdn.net/m1/v/t6/An_v4axbCdfevl9LMrvUjPLJIeyFRpVsQ2RybsjRcTvp835OfXmPuU1Zze2pBLWZ466DP5OHgh2NNayww-Y1za1cXc38w05KcaUPVrkT8mQUv7pvhxnHTit11cPx8wM8ywmWC9H4IZFzfJIMAw.zip?ccb=10-5&oh=00_AYCEQzNK-MKFRL8yuSZI4XRQ3LLjnYJNGP05z8Dh1wFPZQ&oe=676BDF0D&_nc_sid=6de079 

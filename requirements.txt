@@ -1,3 +1,5 @@
 kagglehub
 python-dotenv
 pyyaml
+jupyter
+tensorflow[and-cuda]

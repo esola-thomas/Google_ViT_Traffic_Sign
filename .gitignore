@@ -4,3 +4,8 @@ venv/
 .vscode/
 .nfs*
 actions-runner/
+wget-log*
+downloads/
+*.zip
+cuda_12.6.3_560.35.05_linux.run
+bin
