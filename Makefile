@@ -10,9 +10,14 @@ export PROJECT_PATH := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 CUDA_VERSION=11.4.0
 CUDA_INSTALLER=cuda_$(CUDA_VERSION)_470.42.01_linux.run
 CUDA_URL=https://developer.download.nvidia.com/compute/cuda/$(CUDA_VERSION)/local_installers/$(CUDA_INSTALLER)
-
-CUDNN_URL=https://developer.nvidia.com/downloads/compute/cudnn/secure/8.9.7/local_installers/11.x/cudnn-local-repo-rhel9-8.9.7.29-1.0-1.x86_64.rpm/
-CUDNN_INSTALLER=cudnn_linux.rpm
+DOWNLOAD_DIR=$(PROJECT_PATH)/downloads
+CUDA_INSTALL_DIR=$(DOWNLOAD_DIR)/cuda
+MINICONDA_INSTALLER=Miniconda3-latest-Linux-x86_64.sh
+MINICONDA_URL=https://repo.anaconda.com/miniconda/$(MINICONDA_INSTALLER)
+MINICONDA_DIR=$(DOWNLOAD_DIR)/miniconda
+CUDNN_VERSION=8.2.4.15
+CUDNN_TAR_FILE=cudnn-11.4-linux-x64-v$(CUDNN_VERSION).tgz
+CUDNN_URL=https://developer.download.nvidia.com/compute/redist/cudnn/v8.2.4/$(CUDNN_TAR_FILE)
 
 node_info:
 	@{ \
@@ -53,6 +58,7 @@ clean_venv:
 	find -iname "*.pyc" -delete; \
 	rm -rf downloads/; \
 	rm -rf make_run.log; \
+	rm -rf setup_env.sh; \
 	} 2>&1 | tee -a $(LOG_FILE); \
 
 download_datasets:
@@ -70,62 +76,42 @@ configure_vscode:
 	pwd | sed 's|^|{\"markdown.preview.scrollEditorWithPreview\": false, \"python.defaultInterpreterPath\": \"|; s|$$|/downloads/miniconda/envs/lora_vit/bin/python\"}|' > .vscode/settings.json; \
 	} 2>&1 | tee -a $(LOG_FILE)
 
-install_cuda:
-	@{ \
-	echo "Downloading CUDA Toolkit..."; \
-	mkdir -p downloads/cuda; \
-	wget $(CUDA_URL) -O downloads/$(CUDA_INSTALLER); \
-	echo "Installing CUDA Toolkit..."; \
-	sh downloads/$(CUDA_INSTALLER) --silent --toolkit --override --toolkitpath=$(PROJECT_PATH)/downloads/cuda; \
-	rm downloads/$(CUDA_INSTALLER); \
-	echo "CUDA Toolkit installed."; \
-	echo "Downloading cuDNN..."; \
-	wget $(CUDNN_URL) -O downloads/$(CUDNN_INSTALLER); \
-	echo "Installing cuDNN..."; \
-	rpm2cpio downloads/$(CUDNN_INSTALLER) | cpio -idmv -D $(PROJECT_PATH)/downloads/cuda; \
-	rm downloads/$(CUDNN_INSTALLER); \
-	echo "cuDNN installed."; \
-	} 2>&1 | tee -a $(LOG_FILE)
+cuda:
+	mkdir -p $(DOWNLOAD_DIR)
+	cd $(DOWNLOAD_DIR) && wget $(CUDA_URL)
+	sh $(DOWNLOAD_DIR)/$(CUDA_INSTALLER) --silent --toolkit --override --installpath=$(CUDA_INSTALL_DIR)
+	export PATH=$(CUDA_INSTALL_DIR)/bin:$$PATH
+	export LD_LIBRARY_PATH=$(CUDA_INSTALL_DIR)/lib64:$$LD_LIBRARY_PATH
 
-conda_env:
-	@{ \
-	echo "Downloading Miniconda installer..."; \
-	wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh; \
-	echo "Installing Miniconda..."; \
-	bash miniconda.sh -b -p $(PROJECT_PATH)/downloads/miniconda ; \
-	rm miniconda.sh; \
-	echo "Initializing Conda..."; \
-	$(PROJECT_PATH)/downloads/miniconda/bin/conda init; \
-	source ~/.bashrc; \
-	echo "Creating Conda environment..."; \
-	wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh; \
-	echo "Installing Miniconda..."; \
-	bash miniconda.sh -b -p $(PROJECT_PATH)/downloads/miniconda ; \
-	rm miniconda.sh; \
-	echo "Initializing Conda..."; \
-	$(PROJECT_PATH)/downloads/miniconda/bin/conda init; \
-	source ~/.bashrc; \
-	echo "Creating Conda environment..."; \
-	$(PROJECT_PATH)/downloads/miniconda/bin/conda create -n lora_vit python=3.9 -y; \
-	echo "Activating Conda environment..."; \
-	source $(PROJECT_PATH)/downloads/miniconda/bin/activate lora_vit; \
-	echo "Installing CUDA Toolkit..."; \
-	$(PROJECT_PATH)/downloads/miniconda/bin/conda install -c conda-forge cudatoolkit=$(CUDA_VERSION) -y; \
-	echo "Installing cuDNN..."; \
-	$(PROJECT_PATH)/downloads/miniconda/bin/conda install -c conda-forge cudnn -y; \
-	echo "Installing Python dependencies..."; \
-	$(PROJECT_PATH)/downloads/miniconda/bin/conda run -n lora_vit pip install -r $(PROJECT_PATH)/requirements.txt; \
-	echo "Conda environment setup complete."; \
-	} 2>&1 | tee -a $(LOG_FILE)
+cudnn:
+	cd $(DOWNLOAD_DIR) && wget $(CUDNN_URL)
+	tar -xzvf $(DOWNLOAD_DIR)/$(CUDNN_TAR_FILE) -C $(DOWNLOAD_DIR)
+	chmod a+r $(CUDA_INSTALL_DIR)/include/cudnn*.h $(CUDA_INSTALL_DIR)/lib64/libcudnn*
 
-install: node_info clean_venv conda_env venv download_datasets configure_vscode generate_env_script
+miniconda:
+	cd $(DOWNLOAD_DIR) && wget $(MINICONDA_URL)
+	bash $(DOWNLOAD_DIR)/$(MINICONDA_INSTALLER) -b -p $(MINICONDA_DIR)
+	export PATH=$(MINICONDA_DIR)/bin:$$PATH
+	conda init bash
+	source ~/.bashrc
+	conda create -n lora-vit -c conda-forge tensorflow-gpu=2.11.0 python=3.8.10 -y
+	. $(MINICONDA_DIR)/bin/activate lora-vit && pip install -r $(PROJECT_PATH)/requirements.txt
+
+verify:
+	export PATH=$(CUDA_INSTALL_DIR)/bin:$$PATH && \
+	nvcc --version && \
+	export PATH=$(MINICONDA_DIR)/bin:$$PATH && \
+	source ~/.bashrc && \
+	conda activate lora-vit
+
+install: node_info clean_venv cuda cudnn miniconda generate_env_script verify download_datasets
 	@{ \
 	echo "Installation complete."; \
 	} 2>&1 | tee -a $(LOG_FILE)
 
 jupyter_server:
 	echo "Starting Jupyter server...";
-	srun -p gpu --gres=gpu:1 --pty /bin/bash -c 'source venv/bin/activate && python -m jupyter notebook --ip=10.1.1.52 --port=8888 --no-browser';
+	srun -p gpu --gres=gpu:1 --pty /bin/bash -c 'conda activate lora-vit && python -m jupyter notebook --ip=10.1.1.52 --port=8888 --no-browser';
 	
 generate_env_script:
 	@{ \
