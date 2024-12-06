@@ -7,6 +7,10 @@ This repository contains work to apply LoRA (Low-Rank Adaptation) to the Google 
 1. **Traffic Sign Detection with LoRA**: Applying LoRA to Google ViT to improve traffic sign detection accuracy.
 2. **Robustness Against Attacks**: Enhancing ViT's robustness against phantom attacks and other adversarial attacks to prevent false classifications.
 
+## Dataset
+
+The main dataset used is Mapillary. Traffic signs from the v2 fully annotated images will be cropped and resized to 244x244 pixels.
+
 ## Make Commands
 Define the available make commands that can be run in this section.
 
