@@ -1,4 +1,4 @@
-.PHONY: install, clean_venv, venv, download_datasets, configure_vscode, node_info, install_cuda, generate_env_script
+.PHONY: install, clean_venv, venv, download_datasets, configure_vscode, node_info, install_cuda, generate_env_script, process_mapilary
 
 USE_NODE ?= false
 SRUN_CMD = $(if $(filter true,$(USE_NODE)),echo "Executing in Node..." && srun -p gpu --gres=gpu:2 --pty /bin/bash -c 'make $(MAKECMDGOALS) USE_NODE=false',)
@@ -125,4 +125,12 @@ generate_env_script:
 	echo "export LD_LIBRARY_PATH=$(PROJECT_PATH)/downloads/cuda/lib64:\$$LD_LIBRARY_PATH" >> setup_env.sh; \
 	chmod +x setup_env.sh; \
 	echo "Environment setup script generated as setup_env.sh"; \
+	} 2>&1 | tee -a $(LOG_FILE)
+
+process_mapilary:
+	@{ \
+	echo "Processing Mapillary dataset..."; \
+	echo "Make sure the dataset has been downloaded with 'make download_datasets'"; \
+	conda activate lora-vit; \
+	python process_mapilary.py; \
 	} 2>&1 | tee -a $(LOG_FILE)
