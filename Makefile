@@ -111,7 +111,7 @@ install: node_info clean_venv cuda cudnn miniconda generate_env_script verify do
 
 jupyter_server:
 	echo "Starting Jupyter server...";
-	srun -p gpu --gres=gpu:1 --pty /bin/bash -c 'conda activate lora-vit && python -m jupyter notebook --ip=10.1.1.52 --port=8888 --no-browser';
+	conda activate lora-vit && python -m jupyter notebook --ip=10.1.1.52 --port=8888 --no-browser;
 	
 generate_env_script:
 	@{ \

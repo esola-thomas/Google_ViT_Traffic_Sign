@@ -32,7 +32,7 @@ def process_image(image_id):
         if obj['label'] in categories_to_process:
             bbox = obj['bbox']
             cropped_image = image.crop((bbox['xmin'], bbox['ymin'], bbox['xmax'], bbox['ymax']))
-            resized_image = cropped_image.resize((244, 244))
+            resized_image = cropped_image.resize((224, 224))
 
             sanitized_label = obj['label'].replace('--', '_')
             category_dir = os.path.join(PROCESSED_DIR, sanitized_label)
