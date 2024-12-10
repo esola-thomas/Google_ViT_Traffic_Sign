@@ -7,8 +7,8 @@ LOG_FILE = make_run.log
 
 export PROJECT_PATH := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
-CUDA_VERSION=11.4.0
-CUDA_INSTALLER=cuda_$(CUDA_VERSION)_470.42.01_linux.run
+CUDA_VERSION=11.8.0
+CUDA_INSTALLER=cuda_$(CUDA_VERSION)_520.61.05_linux.run
 CUDA_URL=https://developer.download.nvidia.com/compute/cuda/$(CUDA_VERSION)/local_installers/$(CUDA_INSTALLER)
 DOWNLOAD_DIR=$(PROJECT_PATH)/downloads
 CUDA_INSTALL_DIR=$(DOWNLOAD_DIR)/cuda
