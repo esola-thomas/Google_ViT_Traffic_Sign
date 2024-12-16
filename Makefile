@@ -7,8 +7,8 @@ LOG_FILE = make_run.log
 
 export PROJECT_PATH := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
-CUDA_VERSION=11.8.0
-CUDA_INSTALLER=cuda_$(CUDA_VERSION)_520.61.05_linux.run
+CUDA_VERSION=11.4.1
+CUDA_INSTALLER=cuda_$(CUDA_VERSION)_470.57.02_linux.run
 CUDA_URL=https://developer.download.nvidia.com/compute/cuda/$(CUDA_VERSION)/local_installers/$(CUDA_INSTALLER)
 DOWNLOAD_DIR=$(PROJECT_PATH)/downloads
 CUDA_INSTALL_DIR=$(DOWNLOAD_DIR)/cuda
@@ -133,4 +133,23 @@ process_mapilary:
 	echo "Make sure the dataset has been downloaded with 'make download_datasets'"; \
 	conda activate lora-vit; \
 	python process_mapilary.py; \
+	} 2>&1 | tee -a $(LOG_FILE)
+
+install_podman:
+	@{ \
+	echo "Installing Podman..."; \
+	if [ -x "$(command -v apt-get)" ]; then \
+		apt-get download podman && dpkg -x podman*.deb $(HOME)/podman && rm podman*.deb; \
+	elif [ -x "$(command -v yum)" ]; then \
+		yumdownloader podman && rpm2cpio podman*.rpm | cpio -idmv && mv usr $(HOME)/podman && rm podman*.rpm; \
+	elif [ -x "$(command -v dnf)" ]; then \
+		dnf download podman && rpm2cpio podman*.rpm | cpio -idmv && mv usr $(HOME)/podman && rm podman*.rpm; \
+	elif [ -x "$(command -v zypper)" ]; then \
+		zypper download podman && rpm2cpio podman*.rpm | cpio -idmv && mv usr $(HOME)/podman && rm podman*.rpm; \
+	else \
+		echo "Package manager not found. Please install Podman manually."; \
+		exit 1; \
+	fi; \
+	export PATH=$(HOME)/podman/bin:$$PATH; \
+	echo "Podman installation complete."; \
 	} 2>&1 | tee -a $(LOG_FILE)
