@@ -94,7 +94,7 @@ miniconda:
 	export PATH=$(MINICONDA_DIR)/bin:$$PATH
 	conda init bash
 	source ~/.bashrc
-	conda create -n lora-vit -c conda-forge tensorflow-gpu=2.11.0 python=3.8.10 -y
+	conda create -n lora-vit -c conda-forge nvidia/label/cuda-11.4.0::cuda-toolkit python=3.8.10 -y
 	. $(MINICONDA_DIR)/bin/activate lora-vit && pip install -r $(PROJECT_PATH)/requirements.txt
 
 verify:
