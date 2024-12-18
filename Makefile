@@ -1,23 +1,23 @@
 .PHONY: install, clean_venv, venv, download_datasets, configure_vscode, node_info, install_cuda, generate_env_script, process_mapilary
 
 USE_NODE ?= false
-SRUN_CMD = $(if $(filter true,$(USE_NODE)),echo "Executing in Node..." && srun -p gpu --gres=gpu:2 --pty /bin/bash -c 'make $(MAKECMDGOALS) USE_NODE=false',)
+SRUN_CMD = $(if $(filter true,$(USE_NODE)),echo "Executing in Node..." && srun -p gpu2 --gres=gpu:1 --pty /bin/bash -c 'make $(MAKECMDGOALS) USE_NODE=false',)
 
 LOG_FILE = make_run.log
 
 export PROJECT_PATH := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
-CUDA_VERSION=11.4.1
-CUDA_INSTALLER=cuda_$(CUDA_VERSION)_470.57.02_linux.run
+CUDA_VERSION=12.0.0
+CUDA_INSTALLER=cuda_$(CUDA_VERSION)_525.60.13_linux.run
 CUDA_URL=https://developer.download.nvidia.com/compute/cuda/$(CUDA_VERSION)/local_installers/$(CUDA_INSTALLER)
 DOWNLOAD_DIR=$(PROJECT_PATH)/downloads
 CUDA_INSTALL_DIR=$(DOWNLOAD_DIR)/cuda
 MINICONDA_INSTALLER=Miniconda3-latest-Linux-x86_64.sh
 MINICONDA_URL=https://repo.anaconda.com/miniconda/$(MINICONDA_INSTALLER)
 MINICONDA_DIR=$(DOWNLOAD_DIR)/miniconda
-CUDNN_VERSION=8.2.4.15
-CUDNN_TAR_FILE=cudnn-11.4-linux-x64-v$(CUDNN_VERSION).tgz
-CUDNN_URL=https://developer.download.nvidia.com/compute/redist/cudnn/v8.2.4/$(CUDNN_TAR_FILE)
+CUDNN_VERSION=8.8.0.121
+CUDNN_RPM_FILE=cudnn-local-repo-rhel8-$(CUDNN_VERSION)-1.0-1.x86_64.rpm
+CUDNN_URL=https://developer.download.nvidia.com/compute/redist/cudnn/v8.8.0/local_installers/12.0/$(CUDNN_RPM_FILE)
 
 node_info:
 	@{ \
@@ -88,7 +88,9 @@ cuda:
 
 cudnn:
 	cd $(DOWNLOAD_DIR) && wget $(CUDNN_URL)
-	tar -xzvf $(DOWNLOAD_DIR)/$(CUDNN_TAR_FILE) -C $(DOWNLOAD_DIR)
+	mkdir -p $(DOWNLOAD_DIR)/cudnn_rpm && cd $(DOWNLOAD_DIR)/cudnn_rpm && rpm2cpio ../$(CUDNN_RPM_FILE) | cpio -idmv
+	cp $(DOWNLOAD_DIR)/cudnn_rpm/usr/include/cudnn*.h $(CUDA_INSTALL_DIR)/include/
+	cp $(DOWNLOAD_DIR)/cudnn_rpm/usr/lib64/libcudnn* $(CUDA_INSTALL_DIR)/lib64/
 	chmod a+r $(CUDA_INSTALL_DIR)/include/cudnn*.h $(CUDA_INSTALL_DIR)/lib64/libcudnn*
 
 miniconda:
@@ -97,7 +99,7 @@ miniconda:
 	export PATH=$(MINICONDA_DIR)/bin:$$PATH
 	conda init bash
 	source ~/.bashrc
-	conda create -n lora-vit -c conda-forge nvidia/label/cuda-11.4.0::cuda-toolkit python=3.8.10 -y
+	conda create -n lora-vit -c conda-forge nvidia/label/cuda-12.0.0::cuda-toolkit python=3.8.10 -y
 	. $(MINICONDA_DIR)/bin/activate lora-vit && pip install -r $(PROJECT_PATH)/requirements.txt
 
 verify:
