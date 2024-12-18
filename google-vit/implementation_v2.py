@@ -361,7 +361,7 @@ model.merge_and_unload()
 print("LoRA adapters merged into the base model.")
 
 # Save the merged model separately if desired
-merged_save_directory = 'vit-lora-merged'
+merged_save_directory = 'lora-google-vit-stop-sign'
 os.makedirs(merged_save_directory, exist_ok=True)
 model.save_pretrained(merged_save_directory)
 model.config.save_pretrained(merged_save_directory)

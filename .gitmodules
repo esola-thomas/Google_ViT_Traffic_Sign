@@ -1,0 +1,6 @@
+[submodule "lora-google-vit-stop-sign"]
+	path = lora-google-vit-stop-sign
+	url = https://huggingface.co/ernessola/lora-google-vit-stop-sign
+[submodule "mapilary_stopsign"]
+	path = mapilary_stopsign
+	url = https://huggingface.co/datasets/ernessola/mapilary_stopsign
