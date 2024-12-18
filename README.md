@@ -39,7 +39,13 @@ Provide details about the machine setup and configuration in this section.
 - **Available GPUs**: Tesla K80 (2x)
 
 ```sh
-git clone https://github.com/esola-thomas/Google_ViT_Traffic_Sign.git
+# Log in to Hugging Face
+huggingface-cli login
+
+# Clone the repository and include submodules
+git clone --recurse-submodules https://github.com/esola-thomas/Google_ViT_Traffic_Sign.git
 cd Google_ViT_Traffic_Sign
+
+# Install the necessary dependencies
 make install
 ```
