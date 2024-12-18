@@ -147,7 +147,7 @@ new_category_images = []
 new_category_label = len(class_names) - 1  # Index of the new class (1000)
 
 # Replace with your actual path to the new category images
-new_category_path = '/home/ernestos/ws/downloads/mtsd_v2_fully_annotated/processed/regulatory_stop_g1'
+new_category_path = 'mapilary_stopsign/regulatory_stop_g1'
 
 # Iterate through the directory and load images
 for img_name in os.listdir(new_category_path):

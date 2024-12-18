@@ -62,12 +62,15 @@ clean_venv:
 	} 2>&1 | tee -a $(LOG_FILE); \
 
 download_datasets:
-	@{ \
-	echo "Downloading databases..."; \
-	. venv/bin/activate && python download_datasets/get_dataset_from_yml.py; \
-	echo "Downloading Mapillary dataset..."; \
-	. venv/bin/activate && python download_datasets/get_mapilary_from_yml.py; \
-	} 2>&1 | tee -a $(LOG_FILE)
+	# @{ \
+	# echo "Downloading databases..."; \
+	# . venv/bin/activate && python download_datasets/get_dataset_from_yml.py; \
+	# echo "Downloading Mapillary dataset..."; \
+	# . venv/bin/activate && python download_datasets/get_mapilary_from_yml.py; \
+	# } 2>&1 | tee -a $(LOG_FILE)
+	echo "Ensuring submodules are fetched and pulled to the latest..."; \
+	git submodule init; \
+	git submodule update --recursive --remote; \
 
 configure_vscode:
 	@{ \
